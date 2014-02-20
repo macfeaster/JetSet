@@ -1,0 +1,146 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-2.dtd">
+<head>
+	<title>JetSet - An error occurred</title>
+	<link href="http://fonts.googleapis.com/css?family=Duru+Sans" th:href="@{http://fonts.googleapis.com/css?family=Duru+Sans}" rel="stylesheet" type="text/css" />
+	<link href="http://fonts.googleapis.com/css?family=Oswald:300,700" th:href="@{http://fonts.googleapis.com/css?family=Oswald:400,700}" rel="stylesheet" type="text/css" />
+	<style type="text/css">
+		/* @group Base */
+		body {
+			margin: 0; background: #F5F5F5; font-family: 'Duru Sans', sans-serif;
+		}
+		h1 { font-family: 'Oswald', sans-serif; margin: 0; padding: 0; font-weight: 300; }
+			h1 span { font-weight: 700; }
+		h2 {
+			font-family: 'Oswald', sans-serif; font-weight: 400; color: #002449; border-bottom: 3px solid #a4b4c4; display: block;
+			margin-top: 0; padding-top: 0; background: #FCFCFC;
+		}
+		/* @group Banner */
+		#wrapper { width: 800px; margin: 0 auto; }
+		.left { width: 50%; float: left; }
+		.right { width: 50%; float: left; }
+		.clear { clear: both; }
+		#banner {
+			background: #D30000;
+			font-size: 12px;
+			text-shadow: 0 1px 3px rgba(0, 0, 0, .25);
+			color: #FFFFFF;
+			border-bottom: 1px solid #990000;
+			box-shadow: 0 2px 5px rgba(0, 0, 0, .1);
+			padding: 5px 15px;
+			margin-bottom: 20px;
+			text-align: center;
+		}
+		hr { border: none; border-top: 1px solid #CCCCCC; margin: 20px; }
+		.error { margin: 10px; padding: 10px; background: white; box-shadow: 0 2px 5px rgba(0, 0, 0, .15); }
+		.error_body {
+			margin: 0 auto 10px;
+			padding: 6px 5px 4px 42px;
+			position: relative;
+			color: #444;
+			line-height: 25px;
+			font-size: 12px;
+			border: 1px solid #d2d2d2;
+			background: #fff;
+			background: -webkit-gradient(linear, 0 0, 0 100%, from(#d9eaf3), color-stop(4%, #fff)) 0 4px;
+			background: -webkit-linear-gradient(top, #d9eaf3 0%, #fff 8%) 0 4px;
+			background: -moz-linear-gradient(top, #d9eaf3 0%, #fff 8%) 0 4px;
+			background: -ms-linear-gradient(top, #d9eaf3 0%, #fff 8%) 0 4px;
+			background: -o-linear-gradient(top, #d9eaf3 0%, #fff 8%) 0 4px;
+			background: linear-gradient(top, #d9eaf3 0%, #fff 8%) 0 4px;
+			-webkit-background-size: 100% 25px;
+			-moz-background-size: 100% 25px;
+			-ms-background-size: 100% 25px;
+			-o-background-size: 100% 25px;
+			background-size: 100% 25px;
+			-webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, .1);
+			-moz-box-shadow: 0 1px 2px rgba(0, 0, 0, .1);
+			box-shadow: 0 1px 2px rgba(0, 0, 0, .1);
+			word-wrap: break-word;
+		}
+		.error_body::before {
+			content: ''; position: absolute; width: 4px; top: 0; left: 30px; bottom: 0; border: 1px solid; border-color: transparent #efe4e4;
+		}
+			.exception { color: #C30000; }
+			.stack { color: #999999; }
+			.stack_jetset { font-weight: bold; }
+		/* @group Tables */
+		.request_data { width: 100%; border-spacing: 0; }
+			.request_data td { margin: 0; padding: 0; vertical-align: top; }
+			.request_data tr { margin: 0; padding: 0; }
+			.request_data tr td:first-child { color: #999999; width: 40%; }
+			.request_empty { color: #CCC; }
+			.exception_stack { max-height: 350px; overflow: auto; }
+			.header_table { width: 700px; word-break: break-all; word-wrap: break-word; }
+			.request_key { width: 160px !important; }
+	</style>
+</head>
+<body>
+
+<div id="banner"><h1><span>JetSet</span> ran into an exception running your code</h1></div>
+
+<div id="wrapper">
+
+	<div class="error" th:if="${ExceptionCause}">
+		<h2>Cause</h2>
+		<div class="error_body" th:text="${ExceptionCauseMessage}"></div>
+		<div class="error_body exception" th:text="${ExceptionCause}"></div>
+	</div>
+
+	<div class="error">
+		<h2>Exception</h2>
+		<div class="error_body exception"><strong th:text="${ExceptionMessage}"></strong></div>
+		<div class="error_body exception exception_stack" th:utext="${ExceptionStackTrace}">
+			<div class="stack"></div>
+			<div class="stack_jetset"></div>
+		</div>
+	</div>
+
+	<div class="left">
+		<div class="error">
+			<h2>Request Data</h2>
+			<div class="error_body" th:text="${RequestURL}"></div>
+			<div th:text="${RequestGET}?: 'No GET parameters'" th:class="${RequestGET} ? 'error_body request' : 'error_body request_empty'"></div>
+			<div th:text="(${RequestPOST} eq '{}') ? 'No POST data' : ${RequestPOST}"
+			     th:class="(${RequestPOST} eq '{}') ? 'error_body request_empty' : 'error_body'"></div>
+		</div>
+	</div>
+
+	<div class="right">
+		<div class="error">
+			<h2>Server Variables</h2>
+			<div class="error_body">
+				<table class="request_data">
+					<tbody>
+					<tr th:each="requestItem : ${RequestServer.entrySet()}">
+						<td th:text="${requestItem.key}"></td>
+						<td th:text="${requestItem.value}?: 'None'" th:class="${requestItem.value} ? '' : 'request_empty'">
+							<span class="request_empty"></span>
+						</td>
+					</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+
+	<div class="clear"></div>
+
+	<div class="error">
+		<h2>Request Header</h2>
+		<div class="error_body">
+			<table class="request_data header_table">
+				<tbody>
+				<tr th:each="requestItem : ${RequestHeader.entrySet()}">
+					<td class="request_key" th:text="${requestItem.key}"></td>
+					<td class="request_value" th:text="${requestItem.value}"></td>
+				</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+
+</div>
+
+</body>
+</html>
