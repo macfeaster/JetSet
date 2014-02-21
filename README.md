@@ -54,7 +54,7 @@ Routing
 
 *All* requests to JetSet which are not referring to static content follow the exact same convention:
 
-http://jetsetsite.com/controller/method/methodParameter/methodId/methodTargetId
+`http://jetsetsite.com/controller/method/methodParameter/methodId/methodTargetId`
 
 Where:
 * Controller represents the class in the controllers directory to load (e.g. /products -> ProductsController)
@@ -71,11 +71,11 @@ The Controller
 JetSet gives you the option to either extend JetSetController directly to hook right into the system, *or* to extend a core controller which in its turn extends the JetSetController. Using your own core controller on top of the JetSet functionality may prove beneficial if you have much common functionality in your application.
 
 Regardless, all of your controllers extending the JetSetController will feature the following component instances:
-* jsr, an instance of the JetSetRequest, is a wrapper containing a HttpServletRequest, HttpServletResponse and a ServletContext
-* jsView, an instance of the system/components/View class, grants access to view data assignment and rendering
-* jsInput, an instance of system/components/Input, provides functions to retrieve GET and POST data
-* jsConfig, an instance of application/config/JetSetConfig, provides system configuration variables
-* jsEncryption, an instance of system/components/Encryption, provides encryption support (please see Encryption notes below)
-* methodParameter, a String passed by the JetSetRouter, provides the optional methodParameter (see Routing section)
-* methodId, int, also from the router, provides any ID specified (defaults to 0)
-* methodTargetId, works like methodId but for the optional methodTargetId parameter (see Routing section)
+* `jsr`, an instance of the JetSetRequest, is a wrapper containing a HttpServletRequest, HttpServletResponse and a ServletContext
+* `jsView`, an instance of the system/components/View class, grants access to view data assignment and rendering
+* `jsInput`, an instance of system/components/Input, provides functions to retrieve GET and POST data
+* `jsConfig`, an instance of application/config/JetSetConfig, provides system configuration variables
+* `jsEncryption`, an instance of system/components/Encryption, provides encryption support (please see Encryption notes below)
+* `methodParameter`, a String passed by the JetSetRouter, provides the optional methodParameter (see Routing section)
+* `methodId`, int, also from the router, provides any ID specified (defaults to 0)
+* `methodTargetId`, works like methodId but for the optional methodTargetId parameter (see Routing section)
