@@ -3,7 +3,7 @@ JetSet
 
 *Lightweight Java Enterprise MVC Web Application Framework*
 
-Developed as a private hobby project, born from frustration with regular Java Web MVC frameworks, JetSet is a lightweight, no-bs alternative for Java developers who favor simplicity and performance. It contains only the absolute essentials of Java Enterprise required to run Java on the web.
+Developed as a private hobby project, born from frustration with regular Java Web MVC frameworks, JetSet is a lightweight, no-bs alternative for Java developers who favor simplicity and performance. It contains only the absolute essentials of Java Enterprise required to run Java on the web, as well as a core set of useful features for web applications.
 
 Features:
  * Built-in URL mapping to controllers and methods
