@@ -53,12 +53,10 @@ public class Cookies extends JetSetModel
 
 		if(returnCookie == null)
 		{
-			return new Cookie(null, null);
+			return null;
 		}
-		else
-		{
-			return returnCookie;
-		}
+
+		return returnCookie;
 	}
 
 	// TODO: Create setter

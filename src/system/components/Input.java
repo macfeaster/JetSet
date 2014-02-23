@@ -8,6 +8,7 @@ import java.util.Map;
 public class Input
 {
 	private final HttpServletRequest request;
+	private Map<String, String> queryStringCache;
 
 	public Input(HttpServletRequest request)
 	{
@@ -20,8 +21,14 @@ public class Input
 	 */
 	public Map<String, String> getInputGET()
 	{
-		String queryString = request.getQueryString();
-		return this.parseQueryString(queryString);
+		// Build query string cache map if such does not exist
+		if(queryStringCache.isEmpty())
+		{
+			queryStringCache = parseQueryString(request.getQueryString());
+		}
+
+		// Return the query string cache map
+		return queryStringCache;
 	}
 
 	/**
@@ -31,12 +38,16 @@ public class Input
 	 */
 	public String getInputGET(String key)
 	{
-		String queryString = request.getQueryString();
-		Map<String, String> map = parseQueryString(queryString);
+		// Build GET parameter map if no such exists
+		if(queryStringCache.isEmpty())
+		{
+			queryStringCache = parseQueryString(request.getQueryString());
+		}
 
+		// Return key if found, otherwise null
 		try
 		{
-			return map.get(key);
+			return queryStringCache.get(key);
 		}
 		catch (NullPointerException e)
 		{
@@ -50,6 +61,7 @@ public class Input
 	 */
 	public Map<String, String[]> getInputPOST()
 	{
+		// Return POST map if existent, otherwise empty map
 		try
 		{
 			return request.getParameterMap();
@@ -67,6 +79,7 @@ public class Input
 	 */
 	public String[] getInputPost(String key)
 	{
+		// Return string array with values, if non-existent return empty array
 		try
 		{
 			return request.getParameterMap().get(key);
@@ -84,27 +97,35 @@ public class Input
 	 */
 	Map<String, String> parseQueryString(String urlStringRaw)
 	{
+		// If the Query String is empty, return an empty map
 		if(urlStringRaw == null)
 		{
 			return new HashMap<>();
 		}
 
+		// Set up variables
 		String[] params = urlStringRaw.split("&");
 		Map<String, String> map = new HashMap<>();
+
+		// Build map through iteration
 		for (String param : params)
 		{
-			String name = param.split("=")[0];
-			try
+			// Split to key-value pair and set key
+			String[] pair = param.split("=");
+			String name = pair[0];
+
+			// Put key-value to map if value exists, otherwise key-null
+			if(pair.length > 1)
 			{
-				String value = param.split("=")[1];
-				map.put(name, value);
+				map.put(name, pair[1]);
 			}
-			catch (ArrayIndexOutOfBoundsException e)
+			else
 			{
-				String value = "";
-				map.put(name, value);
+				map.put(name, null);
 			}
 		}
+
+		// Return result
 		return map;
 	}
 }

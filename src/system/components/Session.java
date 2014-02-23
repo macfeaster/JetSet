@@ -1,6 +1,14 @@
 package system.components;
 
-public class Session
+import system.JetSetModel;
+
+@SuppressWarnings("unused")
+public class Session extends JetSetModel
 {
+	public Session()
+	{
+		super();
+	}
+
 
 }

@@ -75,7 +75,7 @@ public class Encryption
 			decrypted = cipher.doFinal(decryptBytes);
 
 			// Return result
-			return new String(decrypted).trim();
+			return new String(decrypted);
 		}
 		catch (NullPointerException e)
 		{
