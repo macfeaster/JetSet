@@ -8,17 +8,17 @@ import system.components.View;
 
 public class JetSetController
 {
-	protected JetSetRequest jsr;
-	protected JetSetConfig jsConfig;
+	protected final JetSetRequest jsr;
+	protected final JetSetConfig jsConfig;
 
-	protected View jsView;
-	protected Input jsInput;
-	protected Encryption jsEncryption;
-	protected Cookies jsCookies;
+	protected final View jsView;
+	protected final Input jsInput;
+	protected final Encryption jsEncryption;
+	protected final Cookies jsCookies;
 
-	protected String methodParameter;
-	protected int methodId;
-	protected int methodTargetId;
+	protected final String methodParameter;
+	protected final int methodId;
+	protected final int methodTargetId;
 
 	/**
 	 * Super controller constructor

@@ -66,7 +66,7 @@ public class JetSetError
 			put("servletPath",          jsr.request.getServletPath());
 		}});
 
-		Map<String, String> requestHeader = new HashMap<String, String>();
+		Map<String, String> requestHeader = new HashMap<>();
 		Enumeration<String> headerEnum = jsr.request.getHeaderNames();
 
 		while(headerEnum.hasMoreElements())

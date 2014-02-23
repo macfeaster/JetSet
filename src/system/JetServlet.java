@@ -11,7 +11,7 @@ import java.io.IOException;
  */
 public class JetServlet extends HttpServlet
 {
-	JetSetRouter jetSetRouter = new JetSetRouter();
+	private final JetSetRouter jetSetRouter = new JetSetRouter();
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
