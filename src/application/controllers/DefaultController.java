@@ -1,6 +1,7 @@
 package application.controllers;
 
 import application.core.JetStoreController;
+import application.models.StoreModel;
 import system.JetSetRequest;
 
 @SuppressWarnings("unused")
@@ -13,6 +14,8 @@ public class DefaultController extends JetStoreController
 
 	public void index() throws Exception
 	{
+		StoreModel storeModel = new StoreModel();
+
 		jsView.assignData("welcome_message", "BOLI BOLI, era små pepparkorn!");
 		jsView.assignData("SiteName", jsConfig.siteName);
 		jsView.assignData("GetKey", jsInput.getInputGET("key"));

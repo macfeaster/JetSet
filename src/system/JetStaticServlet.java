@@ -15,6 +15,6 @@ public class JetStaticServlet extends HttpServlet
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
-
+		// TODO: Make this one fetch the appropriate resources and if needed combine and/or minimize them
 	}
 }

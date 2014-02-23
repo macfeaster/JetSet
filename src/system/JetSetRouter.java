@@ -1,7 +1,6 @@
 package system;
 
 import application.config.JetSetConfig;
-import org.eclipse.jetty.http.HttpURI;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
@@ -17,8 +16,7 @@ public class JetSetRouter
 	{
 		// Set up system variables
 		ClassLoader classLoader = JetSetRouter.class.getClassLoader();
-		HttpURI httpURI = new HttpURI(jsr.request.getRequestURI());
-		String[] jetSetURI = httpURI.toString().substring(1).split("/");
+		String[] jetSetURI = jsr.request.getRequestURI().substring(1).split("/");
 		JetSetConfig jetSetConfig = new JetSetConfig();
 		JetSetError jetSetError = new JetSetError();
 

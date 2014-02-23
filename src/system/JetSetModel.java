@@ -11,7 +11,7 @@ import java.sql.DriverManager;
 @SuppressWarnings("unused")
 public class JetSetModel
 {
-	DSLContext jetSetDb;
+	protected DSLContext jetSetDb;
 
 	public JetSetModel()
 	{
