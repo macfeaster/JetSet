@@ -33,6 +33,8 @@ public class DefaultController extends JetStoreController
 
 	public void index() throws Exception
 	{
+		this.loadEncryption();
+
 		jsView.assignData("welcome_message", "BOLI BOLI, era små pepparkorn!");
 		jsView.assignData("SiteName", SITE_NAME);
 		jsView.assignData("GetKey", jsInput.getInputGET("key"));

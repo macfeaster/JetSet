@@ -20,6 +20,7 @@ package system;
 
 import system.components.View;
 
+import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
@@ -35,6 +36,7 @@ public class JetSetError
 	{
 		View jetSetErrorView = new View(jsr);
 		StringBuilder stackTrace = new StringBuilder();
+		StringBuilder stackTraceCause = new StringBuilder();
 
 		jetSetErrorView.templateResolver.setPrefix("/WEB-INF/");
 		jsr.response.setStatus(200);
@@ -45,13 +47,13 @@ public class JetSetError
 			{
 				String stackItem = stack.toString();
 
-				if(stackItem.contains("system.Jet") || stackItem.contains("application."))
+				if(stackItem.contains("system.") || stackItem.contains("application."))
 				{
 					stackTrace.append("<span class=\"stack_jetset\">at ");
 					stackTrace.append(stackItem);
 					stackTrace.append("</span><br />");
 				}
-				else
+				else if(!stackItem.contains("org.") && !stackItem.contains("java."))
 				{
 					stackTrace.append("<span class=\"stack\">at ");
 					stackTrace.append(stackItem);
@@ -68,6 +70,28 @@ public class JetSetError
 			{
 				jetSetErrorView.assignData("ExceptionCause", e.getCause().toString());
 				jetSetErrorView.assignData("ExceptionCauseMessage", e.getCause().getMessage());
+
+				for(StackTraceElement stack : e.getCause().getStackTrace())
+				{
+					String stackItem = stack.toString();
+
+					if(stackItem.contains("system.") || stackItem.contains("application."))
+					{
+						stackTraceCause.append("<span class=\"stack_jetset\">at ");
+						stackTraceCause.append(stackItem);
+						stackTraceCause.append("</span><br />");
+					}
+					else if(!stackItem.contains("org.") && !stackItem.contains("java."))
+					{
+						stackTraceCause.append("<span class=\"stack\">at ");
+						stackTraceCause.append(stackItem);
+						stackTraceCause.append("</span><br />");
+					}
+
+					stackTraceCause.append(System.getProperty("line.separator"));
+				}
+
+				jetSetErrorView.assignData("ExceptionCauseStackTrace", stackTraceCause);
 			}
 		}
 
