@@ -1,3 +1,21 @@
+/*
+ * This file is part of JetSet, a lightweight Java Enterprise Web MVC framework.
+ * Modified as of 2/24/14 4:06 PM
+ *
+ * JetSet is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * JetSet is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with JetSet.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package system.components;
 
 import javax.servlet.http.HttpServletRequest;
@@ -39,20 +57,18 @@ public class Input
 	public String getInputGET(String key)
 	{
 		// Build GET parameter map if no such exists
-		if(queryStringCache.isEmpty())
+		if(queryStringCache == null)
 		{
 			queryStringCache = parseQueryString(request.getQueryString());
 		}
 
 		// Return key if found, otherwise null
-		try
-		{
-			return queryStringCache.get(key);
-		}
-		catch (NullPointerException e)
+		if(queryStringCache.get(key) == null)
 		{
 			return null;
 		}
+
+		return queryStringCache.get(key);
 	}
 
 	/**
@@ -61,15 +77,8 @@ public class Input
 	 */
 	public Map<String, String[]> getInputPOST()
 	{
-		// Return POST map if existent, otherwise empty map
-		try
-		{
-			return request.getParameterMap();
-		}
-		catch (NullPointerException e)
-		{
-			return new HashMap<>();
-		}
+		// Return map of POST parameters
+		return request.getParameterMap();
 	}
 
 	/**
@@ -79,15 +88,16 @@ public class Input
 	 */
 	public String[] getInputPost(String key)
 	{
+		// Assign given parameter map to array
+		String[] value = request.getParameterMap().get(key);
+
 		// Return string array with values, if non-existent return empty array
-		try
+		if(value == null)
 		{
-			return request.getParameterMap().get(key);
+			return new String[0];
 		}
-		catch (NullPointerException e)
-		{
-			return new String[] {""};
-		}
+
+		return value;
 	}
 
 	/**

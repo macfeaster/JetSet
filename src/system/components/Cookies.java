@@ -1,9 +1,27 @@
+/*
+ * This file is part of JetSet, a lightweight Java Enterprise Web MVC framework.
+ * Modified as of 2/24/14 4:06 PM
+ *
+ * JetSet is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * JetSet is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with JetSet.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package system.components;
 
 import system.JetSetModel;
+import system.JetSetRequest;
 
 import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * These methods all access the raw HTTP cookies
@@ -15,22 +33,13 @@ import javax.servlet.http.HttpServletRequest;
 @SuppressWarnings("unused")
 public class Cookies extends JetSetModel
 {
-	HttpServletRequest request;
+	JetSetRequest jsr;
 	Cookie[] cookies;
 
-	public Cookies(HttpServletRequest request)
+	public Cookies(JetSetRequest jsr)
 	{
-		this.request = request;
-		this.cookies = this.request.getCookies();
-	}
-
-	/**
-	 * Get all cookies as an array
-	 * @return Cookie array of the HttpServletRequest
-	 */
-	public Cookie[] getRawCookies()
-	{
-		return this.cookies;
+		this.jsr = jsr;
+		this.cookies = jsr.request.getCookies();
 	}
 
 	/**
@@ -38,7 +47,7 @@ public class Cookies extends JetSetModel
 	 * @param cookieName Cookie name to search for
 	 * @return Cookie object is found, otherwise null cookie
 	 */
-	public Cookie getRawCookie(String cookieName)
+	public Cookie getCookie(String cookieName)
 	{
 		Cookie returnCookie = null;
 
@@ -59,5 +68,10 @@ public class Cookies extends JetSetModel
 		return returnCookie;
 	}
 
-	// TODO: Create setter
+	public void setCookie(String name, String value)
+	{
+		// Create and set cookie
+		Cookie cookie = new Cookie(name, value);
+		jsr.response.addCookie(cookie);
+	}
 }
